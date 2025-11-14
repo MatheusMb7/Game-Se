@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const JogosModel = require('../models/JogosModel')
+const JogosModel = require('../models/JogosModels')
 const { validarJogo } = require('../validators/JogosValidator')
 const { validarID } = require('../validators/IDValidator')
 

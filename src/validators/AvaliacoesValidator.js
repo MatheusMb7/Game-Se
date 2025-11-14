@@ -1,39 +1,32 @@
-const { body, validationResult } = require('express-validator');
+const yup = require('yup')
+const mongoose = require('mongoose')
 
-const validarAvaliacao = [
-  
-  body('nota')
-    .exists({ checkFalsy: true })
-    .withMessage('A nota é obrigatória')
-    .isInt({ min: 1, max: 5 })
-    .withMessage('A nota deve ser um número inteiro entre 1 e 5')
-    .toInt(), 
+const schema = yup.object().shape({
+  jogo: yup.string().required('O jogo é obrigatório').test(
+    'id-validator',
+    'ID do jogo é inválido',
+    value => mongoose.Types.ObjectId.isValid(value)
+  ),
+  usuario: yup.string().required('O usuário é obrigatório').test(
+    'id-validator',
+    'ID do usuário é inválido',
+    value => mongoose.Types.ObjectId.isValid(value)
+  ),
+  nota: yup.number()
+    .required('A nota é obrigatória')
+    .min(1, 'A nota mínima é 1')
+    .max(5, 'A nota máxima é 5'),
+  comentario: yup.string()
+    .max(500, 'O comentário pode ter no máximo 500 caracteres')
+})
 
-
-  body('jogoId')
-    .exists({ checkFalsy: true })
-    .withMessage('O ID do jogo é obrigatório')
-    .isMongoId()
-    .withMessage('O ID do jogo deve ser um ID válido do MongoDB'),
-];
-
-
-const handleValidationErrors = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      erro: 'Dados inválidos',
-      detalhes: errors.array().map(err => ({
-        campo: err.param,
-        mensagem: err.msg,
-        valor: err.value,
-      })),
-    });
+async function validarAvaliacao(req, res, next) {
+  try {
+    await schema.validate(req.body, { abortEarly: false })
+    next()
+  } catch (error) {
+    return res.status(400).json({ erros: error.errors })
   }
-  next();
-};
+}
 
-module.exports = {
-  validarAvaliacao,
-  handleValidationErrors,
-};
+module.exports = { validarAvaliacao }

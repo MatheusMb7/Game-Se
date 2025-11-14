@@ -1,42 +1,41 @@
+const yup = require('yup')
+const mongoose = require('mongoose')
 
-const { body, validationResult } = require('express-validator');
-
-
-const validarComentario = [
-
-  body('texto')
-    .exists({ checkFalsy: true })
-    .withMessage('O texto do comentário é obrigatório')
-    .isString()
-    .withMessage('O texto deve ser uma string')
-    .trim()
-    .isLength({ min: 1, max: 500 })
-    .withMessage('O comentário deve ter entre 1 e 500 caracteres')
-    .escape(), 
-
-  body('jogoId')
-    .exists({ checkFalsy: true })
-    .withMessage('O ID do jogo é obrigatório')
-    .isMongoId()
-    .withMessage('O ID do jogo deve ser um ID válido do MongoDB'),
-];
-
-const handleValidationErrors = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      erro: 'Dados inválidos',
-      detalhes: errors.array().map(err => ({
-        campo: err.param,
-        mensagem: err.msg,
-        valor: err.value,
-      })),
-    });
+const schema = yup.object().shape(
+  {
+    texto: yup.string()
+    .min(3, "O feedback precisa de pelo menos 3 caracteres")
+    .max(500, "O feedback pode ter no máximo 500 caracteres")
+    .required("Feedback é obrigatório"),
+    data: yup.date().required("Data é obrigatório"),
+     jogo: yup.string().required("O genero é obrigatório")
+      .test(
+        'id-validator',
+        'ID do genero é inválido',
+        value => mongoose.Types.ObjectId.isValid(value)
+      ),
+    usuario: yup.string().required("Estúdio é obrigatório")
+      .test(
+        'id-validator',
+        'ID do estudio é inválido',
+        value => mongoose.Types.ObjectId.isValid(value)
+      ),
+    plataforma: yup.string().required("Plataforma é obrigatório")
+      .test(
+        'id-validator',
+        'ID da plataforma é inválido',
+        value => mongoose.Types.ObjectId.isValid(value)
+      ),
   }
-  next();
-};
+)
 
-module.exports = {
-  validarComentario,
-  handleValidationErrors,
-};
+async function validarComentario(req, res, next) {
+  try {
+    await schema.validate(req.body, { abortEarly: false })
+    next()
+  } catch (error) {
+    return res.status(400).json({ erros: error.errors })
+  }
+}
+
+module.exports = { validarComentario }
