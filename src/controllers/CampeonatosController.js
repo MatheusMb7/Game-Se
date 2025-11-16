@@ -6,12 +6,12 @@ const { validarCampeonato } = require('../validators/CampeonatosValidator')
 const { validarID } = require('../validators/IDValidator')
 
 router.get('/campeonatos', async (req, res, next) => {
-  const campeonatos = await JogosModel.find().populate(['genero','estudio','plataforma'])
+  const campeonatos = await CampeonatosModel.find().populate(['jogo','usuario'])
   res.json(campeonatos)
 })
 
 router.get('/campeonatos/:id', validarID, async (req, res, next) => {
-  const campeonatoEncontrado = await CampeonatosModel.findById(req.params.id).populate(['genero', 'estudio', 'plataforma'])
+  const campeonatoEncontrado = await CampeonatosModel.findById(req.params.id).populate(['jogo','usuario'])
   if (!campeonatoEncontrado) {
     return res.status(404).json({ erro: "Não encontrado" })
   }
@@ -20,7 +20,7 @@ router.get('/campeonatos/:id', validarID, async (req, res, next) => {
 
 router.post('/campeonatos/', validarCampeonato, async (req, res, next) => {
   const campeonatoCadastrado = await CampeonatosModel.create(req.body)
-  res.status(201).json(jogoCadastrado)
+  res.status(201).json(campeonatoCadastrado)
 })
 
 router.put('/campeonatos/:id', validarID, async (req, res, next) => {
