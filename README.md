@@ -11,16 +11,20 @@ Documentação e boas práticas em Node.js
 
 Estrutura do projeto:
 Game-Se
+    >docs
+        modelagem
     >node_modules
     >src
         >controllers
         >models
         >validators
     .env
+    .env.example
     .gitignore
     package-lock.json
     packase.json
     README.md
+
 
 Tecnologias Utilizadas:
 Node.js
@@ -33,6 +37,7 @@ Nodemon
 JavaScript
 Postman (testes)
 Git/GitHub (versionamento)
+dbdiagram.io(diagrama)
 
 
 Passos:
