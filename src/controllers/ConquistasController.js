@@ -6,12 +6,12 @@ const { validarConquista } = require('../validators/ConquistasValidator')
 const { validarID } = require('../validators/IDValidator')
 
 router.get('/conquistas', async (req, res, next) => {
-  const conquistas = await ConquistasModel.find().populate(['genero','estudio','plataforma'])
+  const conquistas = await ConquistasModel.find().populate(['jogo'])
   res.json(conquistas)
 })
 
 router.get('/conquistas/:id', validarID, async (req, res, next) => {
-  const conquistaEncontrada = await ConquistasModel.findById(req.params.id).populate(['genero', 'estudio', 'plataforma'])
+  const conquistaEncontrada = await ConquistasModel.findById(req.params.id).populate(['jogo'])
   if (!conquistaEncontrada) {
     return res.status(404).json({ erro: "Não encontrado" })
   }

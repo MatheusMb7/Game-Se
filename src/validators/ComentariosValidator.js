@@ -8,22 +8,16 @@ const schema = yup.object().shape(
     .max(500, "O feedback pode ter no máximo 500 caracteres")
     .required("Feedback é obrigatório"),
     data: yup.date().required("Data é obrigatório"),
-     jogo: yup.string().required("O genero é obrigatório")
+     jogo: yup.string().required("O jogo é obrigatório")
       .test(
         'id-validator',
-        'ID do genero é inválido',
+        'ID do jogo é inválido',
         value => mongoose.Types.ObjectId.isValid(value)
       ),
-    usuario: yup.string().required("Estúdio é obrigatório")
+    usuario: yup.string().required("Usuario é obrigatório")
       .test(
         'id-validator',
-        'ID do estudio é inválido',
-        value => mongoose.Types.ObjectId.isValid(value)
-      ),
-    plataforma: yup.string().required("Plataforma é obrigatório")
-      .test(
-        'id-validator',
-        'ID da plataforma é inválido',
+        'ID do usuario é inválido',
         value => mongoose.Types.ObjectId.isValid(value)
       ),
   }

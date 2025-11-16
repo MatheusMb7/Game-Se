@@ -12,7 +12,7 @@ const schema = yup.object().shape(
     .max(500, "A descrição pode ter no máximo 500 caracteres")
     .required("Descrição é obrigatório"),
     pontos: yup.string().required("pontos é obrigatório"),
-    jogo: yup.string().required("O genero é obrigatório")
+    jogo: yup.string().required("O jogo é obrigatório")
       .test(
         'id-validator',
         'ID do jogo é inválido',

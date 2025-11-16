@@ -7,19 +7,13 @@ const schema = yup.object().shape(
      usuario: yup.string().required("O Usuario é obrigatório")
       .test(
         'id-validator',
-        'ID do genero é inválido',
+        'ID do usuario é inválido',
         value => mongoose.Types.ObjectId.isValid(value)
       ),
     jogo: yup.string().required("Jogo é obrigatório")
       .test(
         'id-validator',
-        'ID do estudio é inválido',
-        value => mongoose.Types.ObjectId.isValid(value)
-      ),
-    plataforma: yup.string().required("Plataforma é obrigatório")
-      .test(
-        'id-validator',
-        'ID da plataforma é inválido',
+        'ID do jogo é inválido',
         value => mongoose.Types.ObjectId.isValid(value)
       ),
   }
