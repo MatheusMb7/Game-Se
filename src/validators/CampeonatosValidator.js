@@ -25,12 +25,6 @@ const schema = yup.object().shape(
         'ID do estudio é inválido',
         value => mongoose.Types.ObjectId.isValid(value)
       ),
-    plataforma: yup.string().required("Plataforma é obrigatório")
-      .test(
-        'id-validator',
-        'ID da plataforma é inválido',
-        value => mongoose.Types.ObjectId.isValid(value)
-      ),
   }
 )
 

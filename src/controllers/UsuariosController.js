@@ -6,12 +6,12 @@ const { validarUsuario } = require('../validators/UsuariosValidator')
 const { validarID } = require('../validators/IDValidator')
 
 router.get('/usuarios', async (req, res, next) => {
-  const usuarios = await JogosModel.find().populate(['genero','estudio','plataforma'])
+  const usuarios = await UsuariosModel.find()
   res.json(usuarios)
 })
 
 router.get('/usuarios/:id', validarID, async (req, res, next) => {
-  const usuarioEncontrado = await UsuariossModel.findById(req.params.id).populate(['genero', 'estudio', 'plataforma'])
+  const usuarioEncontrado = await UsuariosModel.findById(req.params.id)
   if (!usuariocontrado) {
     return res.status(404).json({ erro: "Não encontrado" })
   }
