@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema(
   {
-    dataLancamento: { type: Date, required: true },
+    dataAdicionado: { type: Date, required: true },
     usuario: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Usuarios',
@@ -13,11 +13,7 @@ const schema = new mongoose.Schema(
       ref: 'Jogos',
       required: true
     },
-    plataforma: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Plataformas',
-      required: true
-    },
+
   }
 )
 

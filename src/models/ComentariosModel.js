@@ -13,12 +13,6 @@ const schema = new mongoose.Schema(
       ref: 'Jogos',
       required: true
     },
-
-    plataforma: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Plataformas',
-      required: true
-    },
   }
 )
 

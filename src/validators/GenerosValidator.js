@@ -8,9 +8,9 @@ const schema = yup.object().shape(
     .max(50, "O nome precisa de no máximo 50 caracteres")
     .required("nome é obrigatório"),
     descricao: yup.string()
-    .min(3, "A descroção precisa de pelo menos 3 caracteres")
-    .max(300, "A descroção pode ter no máximo 300 caracteres")
-    .required("A descroção é obrigatório")
+    .min(3, "A descrição precisa de pelo menos 3 caracteres")
+    .max(300, "A descrição pode ter no máximo 300 caracteres")
+    .required("A descrição é obrigatório")
   }
 )
 

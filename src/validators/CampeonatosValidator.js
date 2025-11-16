@@ -13,16 +13,16 @@ const schema = yup.object().shape(
     .required("Descrição é obrigatório"),
     dataInicio: yup.date().required("Data de inicio do campeonato é obrigatório"),
     dataFim: yup.date().required("Data de fim do campeonato é obrigatório"),
-    jogo: yup.string().required("O genero é obrigatório")
+    jogo: yup.string().required("O jogo é obrigatório")
       .test(
         'id-validator',
-        'ID do genero é inválido',
+        'ID do jogo é inválido',
         value => mongoose.Types.ObjectId.isValid(value)
       ),
-    usuario: yup.string().required("Estúdio é obrigatório")
+    usuario: yup.string().required("usuario é obrigatório")
       .test(
         'id-validator',
-        'ID do estudio é inválido',
+        'ID do usuário é inválido',
         value => mongoose.Types.ObjectId.isValid(value)
       ),
   }
